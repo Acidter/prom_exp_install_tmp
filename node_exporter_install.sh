@@ -8,9 +8,9 @@ higs_ip=$(curl -s http://checkip.amazonaws.com)
 node_exp_port=9101
 
 mkdir -p ~/tmp_deb
-wget ${node_exporter_get_url} -O tmp_deb/node_exporter-${node_exporter_version}.linux-amd64.tar.gz
+wget ${node_exporter_get_url} -O ~/tmp_deb/node_exporter-${node_exporter_version}.linux-amd64.tar.gz
 mkdir ~/tmp_deb/node_exporter_bin
-tar -xvf tmp_deb/node_exporter*.tar.gz -C tmp_deb/node_exporter_bin/
+tar -xvf ~/tmp_deb/node_exporter-${node_exporter_version}.linux-amd64.tar.gz -C ~/tmp_deb/node_exporter_bin/
 mv tmp_deb/node_exporter_bin/node_exporter-${node_exporter_version}.linux-amd64/node_exporter /usr/local/bin/
 rm -rfv ~/tmp_deb
 useradd -rs /bin/false node-exp
@@ -57,4 +57,4 @@ EOF
 systemctl daemon-reload
 systemctl enable --now node_exporter
 
-curl ${higs_ip}:${node_exp_port}
+curl -s ${higs_ip}:${node_exp_port}
