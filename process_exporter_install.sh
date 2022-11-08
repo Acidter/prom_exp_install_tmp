@@ -11,7 +11,7 @@ mkdir -p ~/tmp_deb
 wget ${process_exporter_get_url} -O tmp_deb/process_exporter-${process_exporter_version}.linux-amd64.tar.gz
 mkdir ~/tmp_deb/process_exporter_bin
 tar -xvf ~/tmp_deb/process_exporter-${process_exporter_version}.linux-amd64.tar.gz -C ~/tmp_deb/process_exporter_bin/
-mv tmp_deb/process_exporter_bin/process-exporter-${process_exporter_version}.linux-amd64/process_exporter /usr/local/bin/
+mv tmp_deb/process_exporter_bin/process-exporter-${process_exporter_version}.linux-amd64/process-exporter /usr/local/bin/
 rm -rfv ~/tmp_deb
 
 cat <<EOF > /etc/systemd/system/process_exporter.service
