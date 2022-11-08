@@ -34,9 +34,8 @@ process_names:
   - name: "{{.Matches}}"
     cmdline:
     - 'gnats|socket|api|news|ad|blacklist|clan|friends|leaderboards|mail|news|offer|push|quest|updater'
+EOF
 
 systemctl daemon-reload
 systemctl enable --now process_exporter
-EOF
-
-curl -s ${higs_ip}:${node_exp_port}
+systemctl status process_exporter

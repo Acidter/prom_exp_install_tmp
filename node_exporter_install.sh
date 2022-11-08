@@ -56,5 +56,4 @@ EOF
 
 systemctl daemon-reload
 systemctl enable --now node_exporter
-
-curl -s ${higs_ip}:${node_exp_port}
+systemctl status node_exporter
