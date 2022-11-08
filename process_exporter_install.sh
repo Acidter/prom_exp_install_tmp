@@ -33,7 +33,7 @@ cat <<EOF > /etc/process-exporter.yml
 process_names:
   - name: "{{.Matches}}"
     cmdline:
-    - 'gnats|socket|api|news|ad|blacklist|clan|friends|leaderboards|mail|news|offer|push|quest|updater'
+    - 'gnats|socket|api|news|ad|blacklist|clan|friends|leaderboards|mail|news|offer|push|quest|updater|higgs'
 EOF
 
 systemctl daemon-reload
