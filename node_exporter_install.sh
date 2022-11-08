@@ -11,7 +11,7 @@ mkdir -p ~/tmp_deb
 wget ${node_exporter_get_url} -O ~/tmp_deb/node_exporter-${node_exporter_version}.linux-amd64.tar.gz
 mkdir ~/tmp_deb/node_exporter_bin
 tar -xvf ~/tmp_deb/node_exporter-${node_exporter_version}.linux-amd64.tar.gz -C ~/tmp_deb/node_exporter_bin/
-mv tmp_deb/node_exporter_bin/node-exporter-${node_exporter_version}.linux-amd64/node_exporter /usr/local/bin/
+mv tmp_deb/node_exporter_bin/node_exporter-${node_exporter_version}.linux-amd64/node_exporter /usr/local/bin/
 rm -rfv ~/tmp_deb
 useradd -rs /bin/false node-exp
 
