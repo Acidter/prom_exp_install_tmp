@@ -29,7 +29,14 @@ Restart=always
 WantedBy=multi-user.target
 EOF
 
+cat <<EOF > /etc/process-exporter.yml
+process_names:
+  - name: "{{.Matches}}"
+    cmdline:
+    - 'gnats|socket|api|news|ad|blacklist|clan|friends|leaderboards|mail|news|offer|push|quest|updater'
+
 systemctl daemon-reload
 systemctl enable --now process_exporter
+EOF
 
 curl -s ${higs_ip}:${node_exp_port}
