@@ -7,7 +7,7 @@ bb_exp_port=9115
 
 if [[ "$metrics_ip_arg" == "local" ]]; then
     used_ip=$(ip a | grep "inet\b" | awk '{print $2}' | cut -d/ -f1 | grep 10.*.)
-elif [[ "$metrics_ip_arg" == "external" ]]
+elif [[ "$metrics_ip_arg" == "external" ]]; then
     used_ip=$(curl -s http://checkip.amazonaws.com)
 fi
 
