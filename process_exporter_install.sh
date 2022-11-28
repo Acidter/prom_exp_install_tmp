@@ -21,7 +21,9 @@ Description=Process Exporter for Prometheus
 [Service]
 User=root
 Type=simple
-ExecStart=/usr/local/bin/process-exporter --config.path /etc/process-exporter.yml --web.listen-address=${higs_ip}:${process_exp_port}
+ExecStart=/usr/local/bin/process-exporter \
+  --config.path /etc/process-exporter.yml \
+  --web.listen-address=${higs_ip}:${process_exp_port}
 KillMode=process
 Restart=always
 

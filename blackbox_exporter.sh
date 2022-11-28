@@ -6,9 +6,9 @@ icmp_target_ip=$2 # check
 bb_exp_port=9115
 
 if [[ "$metrics_ip_arg" == "local" ]]; then
-    used_ip=$(ip a | grep "inet\b" | awk '{print $2}' | cut -d/ -f1 | grep 10.*.)
+    metrics_ip=$(ip a | grep "inet\b" | awk '{print $2}' | cut -d/ -f1 | grep 10.*.)
 elif [[ "$metrics_ip_arg" == "external" ]]; then
-    used_ip=$(curl -s http://checkip.amazonaws.com)
+    metrics_ip=$(curl -s http://checkip.amazonaws.com)
 fi
 
 bb_exp_version=0.22.0
@@ -33,7 +33,7 @@ Wants=network-online.target
 User=blackbox-exp
 Group=blackbox-exp
 ExecStart=/usr/local/bin/blackbox_exporter \
-    --web.listen-address=${used_ip}:${bb_exp_port} \
+    --web.listen-address=${metrics_ip}:${bb_exp_port} \
     --config.file="/etc/blackbox-exporter.yml"
 Restart=on-failure
 
