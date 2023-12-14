@@ -1,19 +1,23 @@
 #!/bin/bash
 set -xe
 
-node_exporter_version=1.1.2
+node_exporter_version=1.7.0
 node_exporter_base_url=https://github.com/prometheus/node_exporter/releases/download/
 node_exporter_get_url=${node_exporter_base_url}v${node_exporter_version}/node_exporter-${node_exporter_version}.linux-amd64.tar.gz
 higs_ip=$(curl -s http://checkip.amazonaws.com)
 node_exp_port=9101
+node_exp_user=prometheus-exporter-user
 
 mkdir -p ~/tmp_deb
 wget ${node_exporter_get_url} -O ~/tmp_deb/node_exporter-${node_exporter_version}.linux-amd64.tar.gz
 mkdir ~/tmp_deb/node_exporter_bin
 tar -xvf ~/tmp_deb/node_exporter-${node_exporter_version}.linux-amd64.tar.gz -C ~/tmp_deb/node_exporter_bin/
-mv tmp_deb/node_exporter_bin/node_exporter-${node_exporter_version}.linux-amd64/node_exporter /usr/local/bin/
+mv ~/tmp_deb/node_exporter_bin/node_exporter-${node_exporter_version}.linux-amd64/node_exporter /usr/local/bin/
 rm -rfv ~/tmp_deb
-useradd -rs /bin/false node-exp
+useradd -rs /bin/false ${node_exp_user}
+
+mkdir -v /var/lib/node_exporter
+chown -R ${node_exp_user}:${node_exp_user} /var/lib/node_exporter 
 
 cat <<EOF > /etc/systemd/system/node_exporter.service
 [Unit]
@@ -22,17 +26,17 @@ After=network-online.target
 
 [Service]
 Type=simple
-User=node-exp
-Group=node-exp
+User=${node_exp_user}
+Group=${node_exp_user}
 ExecStart=/usr/local/bin/node_exporter \
---collector.systemd \
+    --collector.systemd \
     --collector.systemd.unit-exclude='.+\\.(automount|device|mount|scope|slice)' \
     --collector.systemd.unit-include='(ll-.+|gnats).+' \
     --collector.systemd.enable-task-metrics \
     --collector.systemd.enable-start-time-metrics \
     --collector.systemd.enable-restarts-metrics \
     --collector.processes \
---collector.textfile \
+    --collector.textfile \
     --collector.textfile.directory=/var/lib/node_exporter \
     --web.listen-address=${higs_ip}:${node_exp_port} \
     --web.telemetry-path=/metrics
