@@ -4,7 +4,7 @@ set -xe
 node_exporter_version=1.7.0
 node_exporter_base_url=https://github.com/prometheus/node_exporter/releases/download/
 node_exporter_get_url=${node_exporter_base_url}v${node_exporter_version}/node_exporter-${node_exporter_version}.linux-amd64.tar.gz
-higs_ip=$(curl -s http://checkip.amazonaws.com)
+higs_ip=$(ip route get 1.1.1.1 | awk '$6 ~ /src/ {print $7}')
 node_exp_port=9101
 node_exp_user=prometheus-exporter-user
 
